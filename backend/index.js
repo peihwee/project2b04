@@ -33,3 +33,13 @@ app.listen(PORT,()=> {
 
 const mainRoutes = require("./routes/mainRoutes");
 app.use("/", mainRoutes);
+
+app.get("/messages", function(req, res, next)
+{
+    res.json(req.query);
+})
+
+app.post("/messages", function(req, res, next)
+{
+    res.json(req.body);
+})
