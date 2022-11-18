@@ -1,3 +1,13 @@
+function isLocalhost(url) 
+{
+    return url.includes('localhost') || url.includes('127.0.0.1');
+}
+
+API_URL = (isLocalhost(window.location.hostname) != true ? 'https://'+window.location.hostname : 'http://localhost:5000');
+const txtHost = document.getElementById("hostname");
+txtHost.innerHTML = window.location.hostname;
+console.log("window.location.hostname",window.location.hostname);
+
 const butInsert = document.getElementById("insertMessage");
 const butInsertByGet = document.getElementById("insertMessageByGet");
 const txtToSend = document.getElementById("messageToSend");
@@ -8,7 +18,7 @@ const txtDisplay = document.getElementById("messagesDisplay");
 /////////////////////////////////////////////////////////////////////
 butInsert.onclick = function()
 {
-    axios.post('http://localhost:5000/messages', { message : txtToSend.value })
+    axios.post(API_URL+'/messages', { message : txtToSend.value })
     .then((response) => {
         console.log(response.data); //View in Browser's Developer Tools
         txtDisplay.textContent = response.data.message;
@@ -20,7 +30,7 @@ butInsert.onclick = function()
 
 butInsertByGet.onclick = function()
 {
-    axios.get('http://localhost:5000/messages', { params: {message : txtToSend.value} })
+    axios.get(API_URL+'/messages', { params: {message : txtToSend.value} })
     .then((response) => {
         console.log(response.data); //View in Browser's Developer Tools
         txtDisplay.textContent = "RECIEVE GET: "+response.data.message;
